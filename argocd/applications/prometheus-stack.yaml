@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/taegyueo/k8s-gitops-practice.git
+    targetRevision: main
+    path: charts/prometheus-stack
+    helm:
+      releaseName: prometheus-stack
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
